@@ -9,12 +9,11 @@ import java.util.UUID;
 public class AdressBookService {
     private ContactRepository repository;
 
-    public void ContactService(ContactRepository repository) {
+    public AdressBookService (ContactRepository repository) {
         this.repository = repository;
     }
 
     public void addContact(String name, String email, String number) {
-        // Menghasilkan angka acak antara 0 (inklusif) dan 100 (eksklusif)
         String id = UUID.randomUUID().toString().substring(0, 8);
         Contact newContact = new Contact(id, name, email, number);
         repository.addContact(newContact);
@@ -24,12 +23,24 @@ public class AdressBookService {
         return repository.getAllContacts();
     }
 
-    public Contact getContact(String id) {
+    public void deleteContact(String id) {
+        repository.deletedContact(id);
+    }
+
+    public void editContact(Contact contact) {
+        repository.editContact(contact);
+    }
+
+    public Contact findContactById(String id) {
         return repository.getContact(id);
     }
 
-    public void deleteContact(String id) {
-        repository.deletedContact(id);
+    public void saveContacts(String filename) {
+        repository.saveContactsToFile(filename);
+    }
+
+    public void loadContacts(String filename) {
+        repository.loadContactsFromFile(filename);
     }
 
 }
